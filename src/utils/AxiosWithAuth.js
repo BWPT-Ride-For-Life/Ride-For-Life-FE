@@ -5,7 +5,7 @@ export const axiosWithAuth = () => {
 
     return axios
         .create ({
-            baseURL: "http://localhost:5000/", //change to API URL
+            baseURL: "https://ride-for-life-bw.herokuapp.com/",
             headers: {
                 Authorization: token
             }
