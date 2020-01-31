@@ -9,17 +9,17 @@ import Login from './components/login'
 function App() {
     const [rideForLife, setRideForLife] = useState([])
 
-    useEffect(()=>{
-        axiosWithAuth()
-            .get('api/drivers')
-            .then(r=> {
-                console.log(r.data)
-                setRideForLife(r.data)
-            })
-            .catch(err =>{
-                console.log(err, 'Error fetching data')
-            })
-    },[])
+    // useEffect(()=>{
+    //     axiosWithAuth()
+    //         .get('api/drivers')
+    //         .then(r=> {
+    //             console.log(r.data)
+    //             setRideForLife(r.data)
+    //         })
+    //         .catch(err =>{
+    //             console.log(err, 'Error fetching data')
+    //         })
+    // },[])
 
   return (
       <RideContext.Provider value={{ rideForLife }}>
