@@ -1,7 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import logo from './logo.svg';
 import './App.css';
-import { RideContext } from './contexts/Ride-Context'
+import { DriverContext } from './contexts/DriverContext'
 import {axiosWithAuth} from "./utils/AxiosWithAuth";
 import { BrowserRouter as Router, Route } from 'react-router-dom';
 import Login from './components/login'
@@ -22,13 +22,14 @@ function App() {
     // },[])
 
   return (
-      <RideContext.Provider value={{ rideForLife }}>
+      <DriverContext.Provider value={{ rideForLife }}>
+          <header className="App-header">
+              <h1>Ride for Life</h1>
+          </header>
         <Router className="App">
-            <Route exact path='/' component={Login} />
-            <header className="App-header">
-            </header>
+            <Route exact path='/login' component={Login} />
         </Router>
-      </RideContext.Provider>
+      </DriverContext.Provider>
 );
 }
 
