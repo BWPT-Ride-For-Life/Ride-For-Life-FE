@@ -3,31 +3,28 @@ import logo from './logo.svg';
 import './App.css';
 import { RideContext } from './contexts/Ride-Context'
 import {axiosWithAuth} from "./utils/AxiosWithAuth";
-import { BrowserRouter as Router, Route } from 'react-router-dom';
-import Login from './components/login'
+
+const [rideForLife, setRideForLife] = useState([])
+
+useEffect(()=>{
+    axiosWithAuth
+        .get('api/drivers')
+        .then(r=> {
+            console.log(r.data)
+            setRideForLife(r.data)
+        })
+        .catch(err =>{
+            console.log(err, 'Error fetching data')
+        })
+},[])
 
 function App() {
-    const [rideForLife, setRideForLife] = useState([])
-
-    // useEffect(()=>{
-    //     axiosWithAuth()
-    //         .get('api/drivers')
-    //         .then(r=> {
-    //             console.log(r.data)
-    //             setRideForLife(r.data)
-    //         })
-    //         .catch(err =>{
-    //             console.log(err, 'Error fetching data')
-    //         })
-    // },[])
-
   return (
       <RideContext.Provider value={{ rideForLife }}>
-        <Router className="App">
-            <Route exact path='/' component={Login} />
+        <div className="App">
             <header className="App-header">
             </header>
-        </Router>
+        </div>
       </RideContext.Provider>
 );
 }
