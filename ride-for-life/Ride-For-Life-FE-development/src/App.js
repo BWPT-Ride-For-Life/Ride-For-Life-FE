@@ -8,6 +8,7 @@ import DriverAccount from "./components/DriverAccount";
 import UserAccount from "./components/UserAccount";
 import ProtectedRoute from "./utils/ProtectedRoute";
 
+const 
 const [rideForLife, setRideForLife] = useState([])
 
     useEffect(()=>{
