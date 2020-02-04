@@ -8,7 +8,7 @@ const emptyForm = {
 
 const Login = (props) => {
     const [info, setInfo] = useState(emptyForm)
-
+    const [userType, setUserType] = useState('')
     const handleChange = e => {
         setInfo({
             ...info,
@@ -19,11 +19,18 @@ const Login = (props) => {
     const handleSubmit = e => {
         e.preventDefault();
         axiosWithAuth()
-            .post('api/login', info)
+            .post('api/auth/login', info)
             .then(res => {
+                console.log(res.data)
                 localStorage.setItem('token', res.data.payload);
                 setInfo(emptyForm)
-                props.history.push('/account')
+                setUserType(res.data)
+                if (('driverID' in userType)) {
+                    props.history.push('/DriverAccount')
+                } else {
+                    props.history.push('/UserAccount')
+                }
+                console.log(res.data)
             })
             .catch(error => console.log(error, "Login Error"))
     }
