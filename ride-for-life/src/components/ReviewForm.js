@@ -1,75 +1,65 @@
-import React, {useState, useEffect} from "react";
-import axios from "axios";
+import React from "react";
+import { Form, withFormik} from "formik";
 import * as Yup from "yup";
-import {withFormik, Form, Field} from "formik";
+import { Button, ButtonToolbar } from "react-bootstrap";
 import styled from "styled-components";
 
-const StyleEntry = styled.div`
-padding: 0;
-display: block;
-margin: 10px 0 0 0;`;
+const Card = styled.div`
+  width: 35%;
+  padding: 10px;
+  border-radius: 10px;
+  box-shadow: 1px 1px 5px black;
+  margin: 20px auto;
+  display: flex;
+  justify-content: space-between;
+`;
 
+const AddReviewForm = props => {
+  const { errors, touched } = props;
 
-const NewReview = ({values, errors, touched, status}) => {
-  const [review,setReview] = useState([]);
+  // const [data, setData] = useState({});
 
-  useEffect(() => {
-      if (status) {
-          setReview([...review, status]);
-      }
-  },[status]);
-
-  return(
-      <div>
-          <Form className="FormMASTER">
-              <h1>Driver Review</h1>
-                  <StyleEntry>
-                  Rating
-                  <Field type="text" name="rating" placeholder="rating" />
-                  {touched.rating && errors.rating && (
-                      <p className="error">{errors.rating}</p>
-                  )}
-                  </StyleEntry>
-                  <StyleEntry>
-                  Write Review
-                  <Field type="text" name="revtxt" placeholder="Review Text" />
-                  {touched.revtxt && errors.revtxt && (
-                      <p className="error">{errors.revtxt}</p>
-                  )}
-                  </StyleEntry>
-                  <StyleEntry>
-                  <button>Submit</button>
-              </StyleEntry>
-              
-          </Form>
-
-      </div>
+  return (
+    <Card>
+      <Form>
+        <textarea
+          type="select"
+          name="rating"
+          placeholder="Rating"
+          touched={touched.rating}
+          errors={errors.rating}
+        />
+        <br />
+        <textarea
+          type="text"
+          name="revtext"
+          placeholder="Review Text"
+          touched={touched.revtext}
+          errors={errors.revtext}
+        />
+        <br />
+        <ButtonToolbar>
+          <Button variant="primary">Submit</Button>
+        </ButtonToolbar>
+      </Form>
+    </Card>
   );
 };
 
-const FormikNewDriver = withFormik({
-  mapPropsToValues({rating, revtxt}) {
-      return {
-          rating: rating || "",
-          revtxt: revtxt || "",
-      };
+const FormikAddReviewForm = withFormik({
+  mapPropsToValues({ rating, revtext }) {
+    return {
+      rating: rating || "",
+      revtext: revtext || ""
+    };
   },
 
   validationSchema: Yup.object().shape({
-      rating: Yup.number()
-      .required("Required field"),
-      revtxt: Yup.string()
-      .required("Required field"),
-  }),
-  handleSubmit(values, { setStatus}) {
-      axios
-      .post("/api/reviews/", values)
-      .then(response => {
-          console.log(response);
-          setStatus(response.data);
-      })
-      .catch(error => console.log(error.response));
-  }
-})(NewReview);
+    revtext: Yup.string().required("Please input review"),
+    rating: Yup.number()
+      .required("Please input rating")
+      .typeError("Please use only digits")
+  })
+})(AddReviewForm);
 
-export default FormikNewDriver;
+export default FormikAddReviewForm;
