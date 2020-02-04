@@ -3,6 +3,9 @@ import axios from "axios";
 // Context
 import { addUser, resetForm, useUserContext } from "../Contexts/UserContext.js";
 
+// UI
+import { Input } from "antd";
+
 fetch('https://ride-for-life-bw.herokuapp.com/api/auth/register-user', {
   method: 'POST',
   body: JSON.stringify({
@@ -19,9 +22,6 @@ fetch('https://ride-for-life-bw.herokuapp.com/api/auth/register-user', {
   .catch(err => {
     alert("Add info please");
   });
-
-// UI
-import { Input } from "antd";
 
 const AddRiderForm = () => {
   const { users, dispatch } = useUserContext();
