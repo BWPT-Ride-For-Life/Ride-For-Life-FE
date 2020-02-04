@@ -40,11 +40,11 @@ const EditRiderForm = () => {
         value={changes.name}
         onChange={handleChange}
       />
-      <label>Username</label>
+      <label>Email</label>
       <Input
         type="text"
-        name="username"
-        value={changes.username}
+        name="email"
+        value={changes.email}
         onChange={handleChange}
       />
       <input type="submit" value="Update Rider" />

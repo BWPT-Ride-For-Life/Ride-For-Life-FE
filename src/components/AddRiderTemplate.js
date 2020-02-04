@@ -34,7 +34,7 @@ const AddRiderForm = () => {
 
   const handleSubmit = e => {
     e.preventDefault();
-    if (!!newUser.name || !!newUser.username) {
+    if (!!newUser.name || !!newUser.email) {
       dispatch(addUser(newUser));
       dispatch(resetForm());
     } else {
@@ -51,11 +51,10 @@ const AddRiderForm = () => {
         value={newUser.name}
         onChange={handleChange}
       />
-      <label>Username</label>
+      <label>Email</label>
       <Input
         type="text"
-        name="username"
-        value={newUser.username}
+        value={newUser.email}
         onChange={handleChange}
       />
 <Input
