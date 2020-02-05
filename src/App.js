@@ -8,7 +8,10 @@ import DriverAccount from "./components/DriverAccount";
 import UserAccount from "./components/UserAccount";
 import ProtectedRoute from "./utils/ProtectedRoute";
 
-const [rideForLife, setRideForLife] = useState([])
+
+
+function App() {
+    const [rideForLife, setRideForLife] = useState([])
 
     useEffect(()=>{
         axiosWithAuth()
@@ -21,8 +24,6 @@ const [rideForLife, setRideForLife] = useState([])
                 console.log(err, 'Error fetching data')
             })
     },[])
-
-function App() {
   return (
       <DriverContext.Provider value={{ rideForLife }}>
           <header className="App-header">
