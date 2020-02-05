@@ -35,8 +35,8 @@ function App() {
             <Route exact path='/RegisterDriver' component={DriverRegistration}/>
             <Route exact path='/RegisterUser' component={UserRegistration}/>
             <Route exact path='/Login' component={Login} />
-            <ProtectedRoute path='DriverAccount' component={DriverAccount}/>
-            <ProtectedRoute path='UserAccount' component={UserAccount}/>
+            <ProtectedRoute path='/DriverAccount' component={DriverAccount}/>
+            <ProtectedRoute path='/UserAccount' component={UserAccount}/>
         </Router>
       </DriverContext.Provider>
 );

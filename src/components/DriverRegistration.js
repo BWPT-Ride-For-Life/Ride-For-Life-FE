@@ -1,5 +1,6 @@
-import React, { Component } from "react";
+import React, { Component, useState } from "react";
 import '../App.css';
+import {axiosWithAuth, getToken} from "../utils/AxiosWithAuth";
 
 // const emailRegex = RegExp(/[A-Z, 0-9, !@#$%^&*]/)
 function emailIsValid (email) {
@@ -24,7 +25,7 @@ export default class DriverRegistration extends Component {
         this.state = {
             firstName: null,
             lastName: null,
-            location: null,
+            location_id: null,
             price: null,
             email: null,
             phoneNumber: null,
@@ -32,7 +33,7 @@ export default class DriverRegistration extends Component {
             formErrors: {
                 firstName: "",
                 lastName: "",
-                location: "",
+                location_id: "",
                 price: "",
                 email: "",
                 phoneNumber: "",
@@ -47,12 +48,31 @@ export default class DriverRegistration extends Component {
         --SUBMITTING--
         First Name: ${this.state.firstName}
         Last Name: ${this.state.lastName}
-        Location: ${this.state.location}
+        Location: ${this.state.location_id}
         Price: ${this.state.price}
         Email: ${this.state.email}
         Phone Number: ${this.state.phoneNumber}
         Password: ${this.state.password}
         `)
+            let info = {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                location_id: this.state.location_id,
+                price: this.state.price,
+                email: this.state.email,
+                phoneNumber: this.state.phoneNumber,
+                password: this.state.password
+            }
+        axiosWithAuth()
+            .post('api/auth/register-driver', info)
+            .then(res => {
+                localStorage.setItem('token', res.data.token)
+                localStorage.setItem('id', res.data.id)
+                console.log(res)
+                // eslint-disable-next-line no-undef
+                props.history.push('/DriverAccount')
+            })
+            .catch(error => console.log(error, "Login Error"))
         } else {
             console.error('FORM INVALID - ERROR')
         }
@@ -69,7 +89,7 @@ export default class DriverRegistration extends Component {
                 formErrors.lastName = value.length < 3  ? 'minimum 3 characters required' : '';
                 break;
             case 'location':
-                formErrors.location = value.length < 10 ? 'minimum 10 characters required' : '';
+                formErrors.location_id = value.length < 1 ? 'minimum 10 characters required' : '';
                 break;
             case 'price':
                 formErrors.price = value.length < 6 ? 'minimum 6 characters required' : '';
@@ -80,7 +100,7 @@ export default class DriverRegistration extends Component {
             case 'phoneNumber':
                 formErrors.phoneNumber = value.length < 11 ? 'minimum 11 characters required' : '';
                 break;
-            case 'fpassword':
+            case 'password':
                 formErrors.password = value.length < 8 ? 'minimum 8 characters required' : '';
                 break;
             default:
@@ -122,16 +142,16 @@ export default class DriverRegistration extends Component {
                         )}
                     </div>
                     <div className='location'>
-                        <label htmlFor='location'>Location</label>
+                        <label htmlFor='location_id'>Location</label>
                         <input
-                            className={formErrors.location.length > 0 ? 'error' : null}
-                            placeholder='location'
-                            type='location'
-                            name='location'
+                            className={formErrors.location_id.length > 0 ? 'error' : null}
+                            placeholder='location_id'
+                            type='number'
+                            name='location_id'
                             noValidate
                             onChange={this.handleChange} />
-                        {formErrors.location.length > 0 && (
-                            <span className='errorMessage'>{formErrors.location}</span>
+                        {formErrors.location_id.length > 0 && (
+                            <span className='errorMessage'>{formErrors.location_id}</span>
                         )}
                     </div>
                     <div className='price'>
