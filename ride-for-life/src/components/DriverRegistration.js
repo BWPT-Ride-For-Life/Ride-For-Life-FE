@@ -13,7 +13,7 @@ const formValid = ({formErrors, ...rest}) => {
 };
 //This validates filled forms
 Object.values(rest).forEach(val =>{
-    val === Null && (valid = false)
+    val === null && (valid = false)
 });
 
 class App extends Component {
