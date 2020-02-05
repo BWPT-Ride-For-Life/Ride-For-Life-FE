@@ -6,7 +6,7 @@ export default function DriverInfo(props) {
 
     // props.drivers.reviews = {review: ''};
 
-    props.drivers.reviews = props.reviews.map((review) => <p key={review}>{review}</p>)
+    props.drivers.reviews = props.reviews.map((review) => <p key={review}>Review: {review}</p>)
 
     return(
         <div className='profile-card'>
