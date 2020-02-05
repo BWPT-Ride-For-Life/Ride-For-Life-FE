@@ -1,12 +1,13 @@
 import React, {useEffect, useState} from 'react'
 import { axiosWithAuth } from "../utils/AxiosWithAuth";
+import DriverInfo from "./DriverInfo";
 
 const DriverProfileCard = () => {
     const [driverInfo, setDriverInfo] = useState([])
 
     useEffect(()=>{
         axiosWithAuth()
-            .get('api/driver/$id')
+            .get('api/drivers/:id')
             .then(r => {
                 setDriverInfo(r.data)
             })
@@ -14,7 +15,7 @@ const DriverProfileCard = () => {
     }, [])
     return (
         <div>
-            {/*<DriverInfo info={driverInfo} />*/}
+            <DriverInfo info={driverInfo} />
         </div>
     )
 }
