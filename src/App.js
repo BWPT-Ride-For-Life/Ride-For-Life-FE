@@ -7,6 +7,8 @@ import Login from './components/Login'
 import DriverAccount from "./components/DriverAccount";
 import UserAccount from "./components/UserAccount";
 import ProtectedRoute from "./utils/ProtectedRoute";
+import DriverRegistration from "./components/DriverRegistration";
+import UserRegistration from "./components/UserRegistration";
 
 
 
@@ -30,9 +32,9 @@ function App() {
               <h1>Ride for Life</h1>
           </header>
         <Router className="App">
-            {/*<Route exact path='/registerUser' component={RegisterUser}/>*/}
-            {/*<Route exact path='/registerDriver' component={RegisterDriver}/>*/}
-            <Route exact path='/login' component={Login} />
+            <Route exact path='/RegisterDriver' component={DriverRegistration}/>
+            <Route exact path='/RegisterUser' component={UserRegistration}/>
+            <Route exact path='/Login' component={Login} />
             <ProtectedRoute path='DriverAccount' component={DriverAccount}/>
             <ProtectedRoute path='UserAccount' component={UserAccount}/>
         </Router>

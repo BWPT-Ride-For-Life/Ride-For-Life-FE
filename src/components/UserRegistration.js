@@ -1,18 +1,24 @@
 import React, { Component } from "react";
-import './App.css';
-const emailRegex = RegExp(/[A-Z, 0-9, !@#$%^&*]/)
+import '../App.css';
+
+// const emailRegex = RegExp(/[A-Z, 0-9, !@#$%^&*]/)
+function emailIsValid (email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
+
 const formValid = ({formErrors, ...rest}) => {
     let valid = true;
 //This validates empty form errors
     Object.values(formErrors).forEach(val => {
         val.length > 0 && (valid = false);
+    Object.values(rest).forEach(val =>{
+        val === null && (valid = false)
+    });
     });
     return valid;
 };
 //This validates filled forms
-Object.values(rest).forEach(val =>{
-    val === null && (valid = false)
-});
+
 export default class UserRegistration extends Component {
     constructor(props) {
         super(props);
@@ -58,10 +64,10 @@ export default class UserRegistration extends Component {
         let formErrors = this.state.formErrors;
         switch (name) {
             case 'firstName':
-                formErrors.firstName = value.length < 6  ? 'minimum 6 characters required' : '';
+                formErrors.firstName = value.length < 3  ? 'minimum 6 characters required' : '';
                 break;
             case 'lastName':
-                formErrors.lastName = value.length < 8  ? 'minimum 8 characters required' : '';
+                formErrors.lastName = value.length < 3  ? 'minimum 8 characters required' : '';
                 break;
             case 'location':
                 formErrors.location = value.length < 10 ? 'minimum 10 characters required' : '';
@@ -70,12 +76,12 @@ export default class UserRegistration extends Component {
                 formErrors.price = value.length < 6 ? 'minimum 6 characters required' : '';
                 break;
             case 'email':
-                formErrors.email = emailRegex.text(value) ? '' : 'email invalid';
+                formErrors.email = emailIsValid(value) ? '' : 'email invalid';
                 break;
             case 'phoneNumber':
                 formErrors.phoneNumber = value.length < 11 ? 'minimum 11 characters required' : '';
                 break;
-            case 'fpassword':
+            case 'password':
                 formErrors.password = value.length < 8 ? 'minimum 6 characters required' : '';
                 break;
             default:
@@ -96,7 +102,6 @@ export default class UserRegistration extends Component {
                             type='text'
                             className={formErrors.firstName.length > 0 ? 'error' : null}
                             placeholder='First Name'
-                            type='text'
                             name='firstName'
                             noValidate
                             onChange={this.handleChange} />
