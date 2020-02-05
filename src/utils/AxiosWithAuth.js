@@ -1,9 +1,11 @@
+import axios from 'axios'
+
 export const axiosWithAuth = () => {
     const token = localStorage.getItem('token');
 
     return axios
         .create ({
-            baseURL: "http://localhost:5000/", //change to API URL
+            baseURL: "https://ride-for-life-bw.herokuapp.com/",
             headers: {
                 Authorization: token
             }
