@@ -1,6 +1,7 @@
-import React, { Component, useState } from "react";
+import React, { Component, useState} from "react";
+import { Redirect, Link }  from 'react-router-dom'
 import '../App.css';
-import {axiosWithAuth, getToken} from "../utils/AxiosWithAuth";
+import {axiosWithAuth} from "../utils/AxiosWithAuth";
 
 // const emailRegex = RegExp(/[A-Z, 0-9, !@#$%^&*]/)
 function emailIsValid (email) {
@@ -19,6 +20,8 @@ const formValid = ({formErrors, ...rest}) => {
 };
 //This validates filled forms
 
+// const [redirect, setRedirect] = useState(false)
+
 export default class DriverRegistration extends Component {
     constructor(props) {
         super(props);
@@ -30,6 +33,7 @@ export default class DriverRegistration extends Component {
             email: null,
             phoneNumber: null,
             password: null,
+            redirect: false,
             formErrors: {
                 firstName: "",
                 lastName: "",
@@ -41,6 +45,8 @@ export default class DriverRegistration extends Component {
             }
         };
     }
+
+
     handleSubmit = e => {
         e.preventDefault();
         if (formValid(this.state)) {
@@ -69,12 +75,22 @@ export default class DriverRegistration extends Component {
                 localStorage.setItem('token', res.data.token)
                 localStorage.setItem('id', res.data.id)
                 console.log(res)
+                this.setState({
+                    redirect: true
+                })
                 // eslint-disable-next-line no-undef
-                props.history.push('/DriverAccount')
+                // if (redirect === true) {
+                //
+                // }
             })
             .catch(error => console.log(error, "Login Error"))
         } else {
             console.error('FORM INVALID - ERROR')
+        }
+    }
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='DriverAccount'/>
         }
     }
     handleChange = e => {
@@ -98,7 +114,7 @@ export default class DriverRegistration extends Component {
                 formErrors.email = emailIsValid(value) ? '' : 'email invalid';
                 break;
             case 'phoneNumber':
-                formErrors.phoneNumber = value.length < 11 ? 'minimum 11 characters required' : '';
+                formErrors.phoneNumber = value.length < 10 ? 'minimum 11 characters required' : '';
                 break;
             case 'password':
                 formErrors.password = value.length < 8 ? 'minimum 8 characters required' : '';
@@ -112,6 +128,7 @@ export default class DriverRegistration extends Component {
         const {formErrors} = this.state;
 
         return <div className='wrapper'>
+            {this.renderRedirect()}
             <div className='form-wrapper'>
                 <h1>Rider Account</h1>
                 <form onSubmit={this.handleSubmit} noValidate>
@@ -207,8 +224,9 @@ export default class DriverRegistration extends Component {
                         )}
                     </div>
                     <div className='createAccount'>
-                        <button type='submit'>Create Account</button>
+                        <button type='submit' /*onClick={this.setRedirect}*/>Create Account</button>
                         <small>Already Have an Account?</small>
+                        <Link to='/login'>Click here</Link>
                     </div>
                 </form>
             </div>
