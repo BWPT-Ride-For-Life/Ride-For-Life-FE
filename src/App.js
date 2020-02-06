@@ -10,8 +10,6 @@ import ProtectedRoute from "./utils/ProtectedRoute";
 import DriverRegistration from "./components/DriverRegistration";
 import UserRegistration from "./components/UserRegistration";
 
-
-
 function App() {
     const [rideForLife, setRideForLife] = useState([])
 
@@ -30,6 +28,7 @@ function App() {
       <DriverContext.Provider value={{ rideForLife }}>
           <header className="App-header">
               <h1>Ride for Life</h1>
+              <DriverRegistration />
           </header>
         <Router className="App">
             <Route exact path='/RegisterDriver' component={DriverRegistration}/>
@@ -39,7 +38,6 @@ function App() {
             <ProtectedRoute path='/UserAccount' component={UserAccount}/>
         </Router>
       </DriverContext.Provider>
-);
-}
-
-export default App;
+)
+  }
+  export default App

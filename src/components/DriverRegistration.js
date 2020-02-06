@@ -3,7 +3,6 @@ import { Redirect, Link }  from 'react-router-dom'
 import '../App.css';
 import {axiosWithAuth} from "../utils/AxiosWithAuth";
 
-// const emailRegex = RegExp(/[A-Z, 0-9, !@#$%^&*]/)
 function emailIsValid (email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
 }
@@ -25,6 +24,7 @@ const formValid = ({formErrors, ...rest}) => {
 export default class DriverRegistration extends Component {
     constructor(props) {
         super(props);
+
         this.state = {
             firstName: null,
             lastName: null,
@@ -44,11 +44,11 @@ export default class DriverRegistration extends Component {
                 password: ""
             }
         };
+
     }
-
-
     handleSubmit = e => {
         e.preventDefault();
+
         if (formValid(this.state)) {
             console.log(`
         --SUBMITTING--
@@ -97,6 +97,7 @@ export default class DriverRegistration extends Component {
         e.preventDefault();
         const { name, value } = e.target;
         let formErrors = this.state.formErrors;
+
         switch (name) {
             case 'firstName':
                 formErrors.firstName = value.length < 3  ? 'minimum 3 characters required' : '';
@@ -122,11 +123,15 @@ export default class DriverRegistration extends Component {
             default:
                 break;
         }
-        this.setState({formErrors, [name]: value}, () => console.log(this.state))
-    };
-    render() {
-        const {formErrors} = this.state;
 
+        this.setState({formErrors, [name]: value}, () => console.log(this.state))
+
+    };
+
+    render() {
+
+        const {formErrors} = this.state;
+        
         return <div className='wrapper'>
             {this.renderRedirect()}
             <div className='form-wrapper'>
@@ -141,9 +146,9 @@ export default class DriverRegistration extends Component {
                             name='firstName'
                             noValidate
                             onChange={this.handleChange} />
-                        {formErrors.firstName.length > 0 && (
-                            <span className='errorMessage'>{formErrors.firstName}</span>
-                        )}
+                            {formErrors.firstName.length > 0 && (
+                                <span className='errorMessage'>{formErrors.firstName}</span>
+                            )}
                     </div>
                     <div className='lastName'>
                         <label htmlFor='lastName'>Last Name</label>
@@ -154,9 +159,9 @@ export default class DriverRegistration extends Component {
                             name='lastName'
                             noValidate
                             onChange={this.handleChange} />
-                        {formErrors.lastName.length > 0 && (
-                            <span className='errorMessage'>{formErrors.lastName}</span>
-                        )}
+                            {formErrors.lastName.length > 0 && (
+                                <span className='errorMessage'>{formErrors.lastName}</span>
+                            )}
                     </div>
                     <div className='location'>
                         <label htmlFor='location_id'>Location</label>
@@ -193,9 +198,9 @@ export default class DriverRegistration extends Component {
                             name='email'
                             noValidate
                             onChange={this.handleChange} />
-                        {formErrors.email.length > 0 && (
-                            <span className='errorMessage'>{formErrors.email}</span>
-                        )}
+                            {formErrors.email.length > 0 && (
+                                <span className='errorMessage'>{formErrors.email}</span>
+                            )}
                     </div>
                     <div className='phoneNumber'>
                         <label htmlFor='phoneNumber'>Phone Number</label>
@@ -206,9 +211,9 @@ export default class DriverRegistration extends Component {
                             name='phoneNumber'
                             noValidate
                             onChange={this.handleChange} />
-                        {formErrors.phoneNumber.length > 0 && (
-                            <span className='errorMessage'>{formErrors.phoneNumber}</span>
-                        )}
+                            {formErrors.phoneNumber.length > 0 && (
+                                <span className='errorMessage'>{formErrors.phoneNumber}</span>
+                            )}
                     </div>
                     <div className='password'>
                         <label htmlFor='password'>Password</label>
@@ -219,9 +224,9 @@ export default class DriverRegistration extends Component {
                             name='password'
                             noValidate
                             onChange={this.handleChange} />
-                        {formErrors.password.length > 0 && (
-                            <span className='errorMessage'>{formErrors.password}</span>
-                        )}
+                            {formErrors.password.length > 0 && (
+                                <span className='errorMessage'>{formErrors.password}</span>
+                            )}
                     </div>
                     <div className='createAccount'>
                         <button type='submit' /*onClick={this.setRedirect}*/>Create Account</button>
@@ -229,6 +234,7 @@ export default class DriverRegistration extends Component {
                         <Link to='/login'>Click here</Link>
                     </div>
                 </form>
+
             </div>
         </div>;
     }
