@@ -7,7 +7,7 @@ import Login from './components/Login'
 import DriverAccount from "./components/DriverAccount";
 import UserAccount from "./components/UserAccount";
 import ProtectedRoute from "./utils/ProtectedRoute";
-
+import DriverRegistration from './components/DriverRegistration'
 
 
 function App() {
@@ -28,6 +28,7 @@ function App() {
       <DriverContext.Provider value={{ rideForLife }}>
           <header className="App-header">
               <h1>Ride for Life</h1>
+              <DriverRegistration />
           </header>
         <Router className="App">
             {/*<Route exact path='/registerUser' component={RegisterUser}/>*/}
@@ -37,7 +38,6 @@ function App() {
             <ProtectedRoute path='UserAccount' component={UserAccount}/>
         </Router>
       </DriverContext.Provider>
-);
-}
-
-export default App;
+)
+  }
+  export default App
