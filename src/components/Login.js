@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import { axiosWithAuth } from "../utils/AxiosWithAuth";
 
 const emptyForm = {
-    username: '',
+    email: '',
     password: ''
 }
 
@@ -22,10 +22,11 @@ const Login = (props) => {
             .post('api/auth/login', info)
             .then(res => {
                 console.log(res.data)
-                localStorage.setItem('token', res.data.payload);
+                localStorage.setItem('token', res.data.token);
+                localStorage.setItem('id', res.data.id);
                 setInfo(emptyForm)
                 setUserType(res.data)
-                if (('driverID' in userType)) {
+                if (('driver_id' in userType)) {
                     props.history.push('/DriverAccount')
                 } else {
                     props.history.push('/UserAccount')
@@ -42,9 +43,9 @@ const Login = (props) => {
                     <div className="loginForm">
                         <input
                             type="text"
-                            name="username"
-                            placeholder="Username"
-                            value={info.username}
+                            name="email"
+                            placeholder="email"
+                            value={info.email}
                             onChange={handleChange}
                         />
                         <input

@@ -1,29 +1,31 @@
-import React, { Component } from "react";
-import './App.css';
+import React, { Component, useState } from "react";
+import '../App.css';
+import {axiosWithAuth, getToken} from "../utils/AxiosWithAuth";
 
-const emailRegex = RegExp(/[A-Z, 0-9, !@#$%^&*]/)
-
+function emailIsValid (email) {
+    return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
+}
 const formValid = ({formErrors, ...rest}) => {
     let valid = true;
 //This validates empty form errors
     Object.values(formErrors).forEach(val => {
         val.length > 0 && (valid = false);
+    Object.values(rest).forEach(val =>{
+        val === null && (valid = false)
+    });
     });
     return valid;
 };
 //This validates filled forms
-Object.values(rest).forEach(val =>{
-    val === null && (valid = false)
-});
 
-class App extends Component {
+export default class DriverRegistration extends Component {
     constructor(props) {
         super(props);
 
         this.state = {
             firstName: null,
             lastName: null,
-            location: null,
+            location_id: null,
             price: null,
             email: null,
             phoneNumber: null,
@@ -31,7 +33,7 @@ class App extends Component {
             formErrors: {
                 firstName: "",
                 lastName: "",
-                location: "",
+                location_id: "",
                 price: "",
                 email: "",
                 phoneNumber: "",
@@ -48,13 +50,32 @@ class App extends Component {
             console.log(`
         --SUBMITTING--
         First Name: ${this.state.firstName}
-        Last Name: ${this.state.LastName}
-        Location: ${this.state.location}
+        Last Name: ${this.state.lastName}
+        Location: ${this.state.location_id}
         Price: ${this.state.price}
         Email: ${this.state.email}
         Phone Number: ${this.state.phoneNumber}
         Password: ${this.state.password}
         `)
+            let info = {
+                firstName: this.state.firstName,
+                lastName: this.state.lastName,
+                location_id: this.state.location_id,
+                price: this.state.price,
+                email: this.state.email,
+                phoneNumber: this.state.phoneNumber,
+                password: this.state.password
+            }
+        axiosWithAuth()
+            .post('api/auth/register-driver', info)
+            .then(res => {
+                localStorage.setItem('token', res.data.token)
+                localStorage.setItem('id', res.data.id)
+                console.log(res)
+                // eslint-disable-next-line no-undef
+                props.history.push('/DriverAccount')
+            })
+            .catch(error => console.log(error, "Login Error"))
         } else {
             console.error('FORM INVALID - ERROR')
         }
@@ -67,25 +88,25 @@ class App extends Component {
 
         switch (name) {
             case 'firstName':
-                formErrors.firstName = value.length < 6  ? 'minimum 6 characters required' : '';
+                formErrors.firstName = value.length < 3  ? 'minimum 3 characters required' : '';
                 break;
             case 'lastName':
-                formErrors.lastName = value.length < 8  ? 'minimum 8 characters required' : '';
+                formErrors.lastName = value.length < 3  ? 'minimum 3 characters required' : '';
                 break;
             case 'location':
-                formErrors.location = value.length < 10 ? 'minimum 10 characters required' : '';
+                formErrors.location_id = value.length < 1 ? 'minimum 10 characters required' : '';
                 break;
             case 'price':
                 formErrors.price = value.length < 6 ? 'minimum 6 characters required' : '';
                 break;
             case 'email':
-                formErrors.email = emailRegex.text(value) ? '' : 'email invalid';
+                formErrors.email = emailIsValid(value) ? '' : 'email invalid';
                 break;
             case 'phoneNumber':
                 formErrors.phoneNumber = value.length < 11 ? 'minimum 11 characters required' : '';
                 break;
-            case 'fpassword':
-                formErrors.password = value.length < 8 ? 'minimum 6 characters required' : '';
+            case 'password':
+                formErrors.password = value.length < 8 ? 'minimum 8 characters required' : '';
                 break;
             default:
                 break;
@@ -109,7 +130,6 @@ class App extends Component {
                             type='text'
                             className={formErrors.firstName.length > 0 ? 'error' : null}
                             placeholder='First Name'
-                            type='text'
                             name='firstName'
                             noValidate
                             onChange={this.handleChange} />
@@ -131,17 +151,30 @@ class App extends Component {
                             )}
                     </div>
                     <div className='location'>
-                        <label htmlFor='location'>Location</label>
+                        <label htmlFor='location_id'>Location</label>
                         <input
-                            className={formErrors.location.length > 0 ? 'error' : null}
-                            placeholder='location'
-                            type='location'
-                            name='location'
+                            className={formErrors.location_id.length > 0 ? 'error' : null}
+                            placeholder='location_id'
+                            type='number'
+                            name='location_id'
                             noValidate
                             onChange={this.handleChange} />
-                         {formErrors.location.length > 0 && (
-                                <span className='errorMessage'>{formErrors.location}</span>
-                            )}   
+                        {formErrors.location_id.length > 0 && (
+                            <span className='errorMessage'>{formErrors.location_id}</span>
+                        )}
+                    </div>
+                    <div className='price'>
+                        <label htmlFor='price'>Price</label>
+                        <input
+                            className={formErrors.price.length > 0 ? 'error' : null}
+                            placeholder='Price'
+                            type='price'
+                            name='price'
+                            noValidate
+                            onChange={this.handleChange} />
+                        {formErrors.price.length > 0 && (
+                            <span className='errorMessage'>{formErrors.price}</span>
+                        )}
                     </div>
                     <div className='email'>
                         <label htmlFor='email'>Email</label>
