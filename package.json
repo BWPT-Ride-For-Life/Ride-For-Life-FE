@@ -25,6 +25,17 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/BWPT-Ride-For-Life/Ride-For-Life-FE.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/BWPT-Ride-For-Life/Ride-For-Life-FE/issues"
+  },
+  "homepage": "https://github.com/BWPT-Ride-For-Life/Ride-For-Life-FE#readme",
   "eslintConfig": {
     "extends": "react-app"
   },
