@@ -18,7 +18,7 @@ const Card = styled.div`
 const AddReviewForm = ({ errors, touched, status }) => {
 
   const [review, setReview] = useState([]);
-
+    console.log(review, 'review state')
   useEffect(() => {
       status && setReview(review => [...review, status]);
   }, [status]);
@@ -49,13 +49,13 @@ const AddReviewForm = ({ errors, touched, status }) => {
         <br />
         <Button type='submit' color="primary">Submit</Button>{''}
       </Form>
-      {review.map(review => (
-          <ul key={review.id}>
-            <li>Driver ID: {review.driver_id}</li>
-            <li>Review: {review.review}</li>
-            <li>User: {review.user}</li>
-          </ul>
-      ))}
+      {/*{review.map(review => (*/}
+      {/*    <ul key={review.id}>*/}
+      {/*      <li>Driver ID: {review.driver_id}</li>*/}
+      {/*      <li>Review: {review.review}</li>*/}
+      {/*      <li>User: {review.user}</li>*/}
+      {/*    </ul>*/}
+      {/*))}*/}
     </Card>
   );
 
