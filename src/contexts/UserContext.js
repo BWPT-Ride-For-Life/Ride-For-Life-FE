@@ -25,6 +25,7 @@ export const REMOVE_USER = "REMOVE_USER";
 export const TOGGLE_EDIT = "TOGGLE_EDIT";
 export const RESET_FORM = "RESET_FORM";
 
+
 // Action Creators
 export const addUser = user => {
   return { type: ADD_USER, user };
@@ -56,6 +57,7 @@ export const userReducer = (state, action) => {
     case ADD_USER:
       action.user.id = state.users.length + 1;
       return { ...state, users: [...state.users, action.user] };
+     
     case EDIT_USER:
       toggleEdit();
       return {

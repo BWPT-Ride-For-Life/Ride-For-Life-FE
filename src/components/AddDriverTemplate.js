@@ -23,7 +23,7 @@ fetch('https://ride-for-life-bw.herokuapp.com/api/auth/register-user', {
     alert("Add info please");
   });
 
-const AddRiderForm = () => {
+const AddDriverForm = () => {
   const { users, dispatch } = useUserContext();
   const [newUser, setNewUser] = useState(users.userForm);
 
@@ -64,9 +64,9 @@ const AddRiderForm = () => {
         onChange={handleChange}
       />
 
-      <input type="submit" value="Add New Rider" />
+      <input type="submit" value="Add New Driver" />
     </form>
   );
 };
 
-export default AddRiderForm;
+export default AddDriverForm;

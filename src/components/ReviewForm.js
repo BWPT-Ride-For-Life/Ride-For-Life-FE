@@ -3,6 +3,7 @@ import { Form, withFormik} from "formik";
 import * as Yup from "yup";
 import { Button, ButtonToolbar } from "react-bootstrap";
 import styled from "styled-components";
+import axios from "axios";
 
 const Card = styled.div`
   width: 35%;
@@ -18,6 +19,39 @@ const AddReviewForm = props => {
   const { errors, touched } = props;
 
   // const [data, setData] = useState({});
+  
+  const sentData = { data: " " };
+ const  handleChange = e => {
+    this.setState({
+      rating: {
+        ...this.state.rating,
+        [e.target.name]: e.target.value
+      },
+      revtext: {
+        ...this.state.revtext,
+        [e.target.name]: e.target.value
+      }
+    });
+  };
+
+ 
+  postReview = e => {
+    e.preventDefault();
+    this.props.postReview(this.state.revtext);
+  };
+  postRating = e => {
+    e.preventDefault();
+    this.props.postRating(this.state.rating);
+  };
+
+  axios
+    .post("https://ride-for-life-bw.herokuapp.com/api/drivers/:id", sentData)
+    .then(res => {
+      console.log(res.data); // Data was created 
+    })
+    .catch(err => {
+      console.log(err); // There was an error 
+    });
 
   return (
     <Card>
@@ -27,6 +61,7 @@ const AddReviewForm = props => {
           name="rating"
           placeholder="Rating"
           touched={touched.rating}
+         // onChange={this.handleChange}
           errors={errors.rating}
         />
         <br />
@@ -35,6 +70,7 @@ const AddReviewForm = props => {
           name="revtext"
           placeholder="Review Text"
           touched={touched.revtext}
+          //onChange={this.handleChange}
           errors={errors.revtext}
         />
         <br />

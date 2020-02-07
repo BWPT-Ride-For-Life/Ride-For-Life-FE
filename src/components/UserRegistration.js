@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import './App.css';
+//import './App.css';
 const emailRegex = RegExp(/[A-Z, 0-9, !@#$%^&*]/)
 const formValid = ({formErrors, ...rest}) => {
     let valid = true;
@@ -11,7 +11,7 @@ const formValid = ({formErrors, ...rest}) => {
 };
 //This validates filled forms
 Object.values(rest).forEach(val =>{
-    val === null && (valid = false)
+   val === null && (valid = false)
 });
 export default class UserRegistration extends Component {
     constructor(props) {

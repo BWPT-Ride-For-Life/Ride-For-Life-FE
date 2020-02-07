@@ -11,7 +11,7 @@ import {
 // UI
 import { Input, Button } from "antd";
 
-const EditRiderForm = () => {
+const EditDriverForm = () => {
   const { users, dispatch } = useUserContext();
   const [changes, setChanges] = useState({
     id: null,
@@ -60,4 +60,4 @@ const EditRiderForm = () => {
   );
 };
 
-export default EditRiderForm;
+export default EditDriverForm;

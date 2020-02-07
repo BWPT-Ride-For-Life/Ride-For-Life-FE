@@ -1,5 +1,5 @@
 import React, { Component } from "react";
-import './App.css';
+//import './App.css';
 
 const emailRegex = RegExp(/[A-Z, 0-9, !@#$%^&*]/)
 const formValid = ({formErrors, ...rest}) => {
@@ -11,11 +11,11 @@ const formValid = ({formErrors, ...rest}) => {
     return valid;
 };
 //This validates filled forms
-Object.values(rest).forEach(val =>{
+Obect.values(rest).forEach(val =>{
     val === null && (valid = false)
 });
 export default class DriverRegistration extends Component {
-    constructor(props) {
+   constructor(props) {
         super(props);
         this.state = {
             firstName: null,
