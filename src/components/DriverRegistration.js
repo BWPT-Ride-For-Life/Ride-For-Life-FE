@@ -86,7 +86,7 @@ export default class DriverRegistrationForm extends React.Component{
         
         return <div className='wrapper'>
             <div className='form-wrapper'>
-                <h1>Rider Account</h1>
+                <h1>Driver Account</h1>
                 <form onSubmit={this.handleSubmit}>
                     <div className='firstName'>
                         <label htmlFor='firstName'>First Name</label>

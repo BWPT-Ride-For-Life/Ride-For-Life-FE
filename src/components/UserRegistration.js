@@ -2,7 +2,7 @@ import React, { Component } from "react";
 //import './App.css';
 
 
-export default class DriverRegistrationForm extends React.Component{
+export default class UserRegistrationForm extends React.Component{
     constructor (props){
       super(props)
       this.state ={
@@ -90,8 +90,7 @@ export default class DriverRegistrationForm extends React.Component{
                 <form onSubmit={this.handleSubmit}>
                     <div className='firstName'>
                         <label htmlFor='firstName'>First Name</label>
-                        <input
-                            name='firstName'
+                        <input                            name='firstName'
                             placeholder='First Name'
                             type='firstName'
                             firstname='firstName'
