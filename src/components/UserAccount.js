@@ -1,11 +1,11 @@
-import React, {useContext} from 'react'
+import React from 'react'
 // import DebounceSearch from "./DebounceSearch";
 import Search from "./SearchByLocation";
 import FormikAddReviewForm from "./ReviewForm";
 // import DriverCard from "./DriverCard";
 // import {DriverContext} from "../contexts/DriverContext";
-import DriverList from "./DriverList";
-// // import {axiosWithAuth} from "../utils/AxiosWithAuth";
+// import DriverList from "./DriverList";
+// import {axiosWithAuth} from "../utils/AxiosWithAuth";
 // import axios from 'axios'
 // import {DriverConsumer} from "../contexts/DriverContext";
 
@@ -32,7 +32,7 @@ const UserAccount = () => {
                 <div>
                     {/*<DebounceSearch/>*/}
                     {/*<DriverConsumer>*/}
-                    {({drivers}) => <DriverList drivers={drivers}/>}
+                    {/*<DriverList drivers={drivers}/>*/}
                     <Search/>
                     {/*</DriverConsumer>*/}
                     <FormikAddReviewForm/>

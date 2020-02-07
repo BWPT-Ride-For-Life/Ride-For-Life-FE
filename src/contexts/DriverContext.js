@@ -1,8 +1,8 @@
-import React, {createContext, useEffect, useState} from 'react';
-import {axiosWithAuth} from "../utils/AxiosWithAuth";
+import React, {createContext} from 'react';
+// import {axiosWithAuth} from "../utils/AxiosWithAuth";
 
 export const DriverContext = createContext([]);
-export const DriverConsumer = DriverContext.Consumer;
+// export const DriverConsumer = DriverContext.Consumer;
 
 // export class DriverProvider extends React.Component {
 //     constructor() {

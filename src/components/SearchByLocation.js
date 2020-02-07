@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import axios from 'axios'
 import DriverCard from "./DriverCard";
+import {axiosWithAuth} from "../utils/AxiosWithAuth";
 
 export default class Search extends Component {
 
@@ -32,39 +33,43 @@ export default class Search extends Component {
     }
 
     searchDriver(query) {
-        const url = "https://ride-for-life-bw.herokuapp.com/api/drivers" // api url
+        const url = "/api/drivers" // api url
 
         if (query) {
-            axios
+            axiosWithAuth()
                 .get(url)
                 .then(r => {
+                    console.log(r, 'search response')
                     return r.data;
+
                 })
                 .then(data => {
                     console.log(data)
                     let drivers = data.filter(drivers => drivers.location === query).map((drivers) => {
                         return (
-                            <DriverCard  key={drivers.name} driver={drivers}/>
+                            <DriverCard  key={drivers.id} driver={drivers}/>
                         )
                     })
                     this.setState({ drivers: drivers });
-                    console.log("state", drivers)
+                    console.log(drivers, 'search query state')
                 })
-        } else {
-            axios
-                .get(url)
-                .then(r => {
-                    return r.data;
-                })
-                .then(data => {
-                    let drivers = data.map(() => { //drivers
-                        return ( ''
-                        )
-                    })
-                    this.setState({ drivers: drivers });
-                    console.log("state", drivers)
-                })
-        }
+                .catch(err => console.log(err, 'error'))
+            } /*else {*/
+        //     axiosWithAuth()
+        //         .get(url)
+        //         .then(r => {
+        //             return r.data;
+        //         })
+        //         .then(data => {
+        //             let drivers = data.map((drivers) => { //drivers
+        //                 return ( ''
+        //                 )
+        //             })
+        //             this.setState({ drivers: drivers });
+        //             console.log(drivers, 'search query else')
+        //         })
+        //         .catch(err => console.log(err, 'error'))
+        // }
     }
 
     render() {

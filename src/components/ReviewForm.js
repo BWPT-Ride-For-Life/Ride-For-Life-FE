@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { Form, withFormik } from "formik";
+import {Field, Form, withFormik } from "formik";
 import * as Yup from "yup";
-// import { Button } from "reactstrap";
+import { Button } from "reactstrap";
 import styled from "styled-components";
-import axios from "axios";
+import {axiosWithAuth} from "../utils/AxiosWithAuth";
 
 const Card = styled.div`
   width: 60vw;
@@ -16,68 +16,86 @@ const Card = styled.div`
 `;
 
 const AddReviewForm = ({ errors, touched, status }) => {
+
   const [review, setReview] = useState([]);
 
   useEffect(() => {
-    if (status) {
-      setReview([...review, status]);
-    }
-  }, [review, status]);
-
-  // const [data, setData] = useState({});
+      status && setReview(review => [...review, status]);
+  }, [status]);
 
   return (
     <Card>
       <h1>Driver Rating </h1>
       <Form>
-        <textarea type="text" name="id" placeholder="Driver ID" />
-        {touched.id && errors.id(<p className="error">{errors.id}</p>)}
-        <br />
-        <textarea
+        <Field
+            type="text"
+            name="driver_id"
+            placeholder="Driver ID" />
+        {touched.driver_id && errors.driver_id && (<p className="error">{errors.driver_id}</p>)}
+        {/*<br />*/}
+        <Field
           type="text"
-          name="revtext"
+          name="review"
           placeholder="Review Text"
-          touched={touched.revtext}
-          errors={errors.revtext}
         />
-        <br />
-        <textarea
+        {touched.review && errors.review && (<p className='error'>{errors.review}</p>)}
+        {/*<br />*/}
+        <Field
           type="text"
           name="user"
           placeholder="User"
-          touched={touched.user}
-          errors={errors.user}
         />
+        {touched.user && errors.user && (<p className='error'>{errors.user}</p>)}
         <br />
-        <button color="primary">Submit</button>{''}
+        <Button type='submit' color="primary">Submit</Button>{''}
       </Form>
+      {review.map(review => (
+          <ul key={review.id}>
+            <li>Driver ID: {review.driver_id}</li>
+            <li>Review: {review.review}</li>
+            <li>User: {review.user}</li>
+          </ul>
+      ))}
     </Card>
   );
+
 };
 
 const FormikAddReviewForm = withFormik({
-  mapPropsToValues({ id, revtext, user }) {
+  mapPropsToValues({driver_id, review, user}) {
     return {
-      id: id || "",
-      revtext: revtext || "",
+      driver_id: driver_id || "",
+      review: review || "",
       user: user || ""
     };
   },
 
   validationSchema: Yup.object().shape({
-    revtext: Yup.string().required("Please input review"),
-    id: Yup.number()
-      .required("Please input rating")
-      .typeError("Please use only digits"),
-    user: Yup.string().required("Please enter username")
+    review: Yup
+        .string()
+        .required("Please input review"),
+    driver_id: Yup
+        .number()
+        .required("Please input driver id")
+        .typeError("Please use only digits"),
+    user: Yup
+        .string()
+        .required("Please enter username")
   }),
-  handleSubmit(values, { setStatus }) {
-    axios
-      .post("/api/drivers/:id", values)
-      .then(response => {
-        console.log(response.data.reviews);
 
-        setStatus(response.data.review);
+  handleSubmit(values, { setStatus }) {
+    let driver_id = (values.driver_id)
+    let post = {
+      review: values.review
+    }
+    axiosWithAuth()
+      .post(`/api/drivers/${driver_id}/reviews`, post)
+      .then(response => {
+        console.log(response.data);
+        console.log(response)
+        setStatus(response.data);
+        console.log(values, 'values')
+        console.log(post, 'post')
       })
       .catch(error => console.log(error.response));
   }
