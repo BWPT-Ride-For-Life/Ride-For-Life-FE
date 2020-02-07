@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { Form, withFormik } from "formik";
 import * as Yup from "yup";
-import { Button } from "reactstrap";
+// import { Button } from "reactstrap";
 import styled from "styled-components";
 import axios from "axios";
 
@@ -49,7 +49,7 @@ const AddReviewForm = ({ errors, touched, status }) => {
           errors={errors.user}
         />
         <br />
-        <Button color="primary">Submit</Button>{''}
+        <button color="primary">Submit</button>{''}
       </Form>
     </Card>
   );

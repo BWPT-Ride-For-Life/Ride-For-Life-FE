@@ -1,5 +1,7 @@
 import React, { Component } from "react";
 import '../App.css';
+import {axiosWithAuth} from "../utils/AxiosWithAuth";
+import {Link, Redirect} from "react-router-dom";
 
 // const emailRegex = RegExp(/[A-Z, 0-9, !@#$%^&*]/)
 function emailIsValid (email) {
@@ -23,20 +25,15 @@ export default class UserRegistration extends Component {
     constructor(props) {
         super(props);
         this.state = {
-            firstName: null,
-            lastName: null,
-            location: null,
-            price: null,
+            name: null,
+            // lastName: null,
             email: null,
-            phoneNumber: null,
             password: null,
+            redirect: false,
             formErrors: {
-                firstName: "",
-                lastName: "",
-                location: "",
-                price: "",
+                name: "",
+                // lastName: "",
                 email: "",
-                phoneNumber: "",
                 password: ""
             }
         };
@@ -46,16 +43,35 @@ export default class UserRegistration extends Component {
         if (formValid(this.state)) {
             console.log(`
         --SUBMITTING--
-        First Name: ${this.state.firstName}
-        Last Name: ${this.state.lastName}
-        Location: ${this.state.location}
-        Price: ${this.state.price}
+        Name: ${this.state.name}
+        // Last Name: ${this.state.lastName}
         Email: ${this.state.email}
-        Phone Number: ${this.state.phoneNumber}
         Password: ${this.state.password}
         `)
+            let info = {
+                name: this.state.name,
+                // lastName: this.state.lastName,
+                email: this.state.email,
+                password: this.state.password
+            }
+            axiosWithAuth()
+                .post('api/auth/register-user', info)
+                .then(res => {
+                    localStorage.setItem('token', res.data.token)
+                    localStorage.setItem('id', res.data.id)
+                    console.log(res)
+                    this.setState({
+                        redirect: true
+                    })
+                })
+                .catch(error => console.log(error, "Login Error"))
         } else {
             console.error('FORM INVALID - ERROR')
+        }
+    }
+    renderRedirect = () => {
+        if (this.state.redirect) {
+            return <Redirect to='UserAccount'/>
         }
     }
     handleChange = e => {
@@ -63,23 +79,14 @@ export default class UserRegistration extends Component {
         const { name, value } = e.target;
         let formErrors = this.state.formErrors;
         switch (name) {
-            case 'firstName':
-                formErrors.firstName = value.length < 3  ? 'minimum 6 characters required' : '';
+            case 'name':
+                formErrors.name = value.length < 3  ? 'minimum 6 characters required' : '';
                 break;
-            case 'lastName':
-                formErrors.lastName = value.length < 3  ? 'minimum 8 characters required' : '';
-                break;
-            case 'location':
-                formErrors.location = value.length < 10 ? 'minimum 10 characters required' : '';
-                break;
-            case 'price':
-                formErrors.price = value.length < 6 ? 'minimum 6 characters required' : '';
-                break;
+            // case 'lastName':
+            //     formErrors.lastName = value.length < 3  ? 'minimum 8 characters required' : '';
+            //     break;
             case 'email':
                 formErrors.email = emailIsValid(value) ? '' : 'email invalid';
-                break;
-            case 'phoneNumber':
-                formErrors.phoneNumber = value.length < 11 ? 'minimum 11 characters required' : '';
                 break;
             case 'password':
                 formErrors.password = value.length < 8 ? 'minimum 6 characters required' : '';
@@ -94,47 +101,35 @@ export default class UserRegistration extends Component {
 
         return <div className='wrapper'>
             <div className='form-wrapper'>
+                {this.renderRedirect()}
                 <h1>Rider Account</h1>
                 <form onSubmit={this.handleSubmit} noValidate>
                     <div className='firstName'>
-                        <label htmlFor='firstName'>First Name</label>
+                        <label htmlFor='name'>Name</label>
                         <input
                             type='text'
-                            className={formErrors.firstName.length > 0 ? 'error' : null}
-                            placeholder='First Name'
-                            name='firstName'
+                            className={formErrors.name.length > 0 ? 'error' : null}
+                            placeholder='Name'
+                            name='name'
                             noValidate
                             onChange={this.handleChange} />
-                        {formErrors.firstName.length > 0 && (
-                            <span className='errorMessage'>{formErrors.firstName}</span>
+                        {formErrors.name.length > 0 && (
+                            <span className='errorMessage'>{formErrors.name}</span>
                         )}
                     </div>
-                    <div className='lastName'>
-                        <label htmlFor='lastName'>Last Name</label>
-                        <input
-                            className={formErrors.lastName.length > 0 ? 'error' : null}
-                            placeholder='Last Name'
-                            type='lastName'
-                            name='lastName'
-                            noValidate
-                            onChange={this.handleChange} />
-                        {formErrors.lastName.length > 0 && (
-                            <span className='errorMessage'>{formErrors.lastName}</span>
-                        )}
-                    </div>
-                    <div className='location'>
-                        <label htmlFor='location'>Location</label>
-                        <input
-                            className={formErrors.location.length > 0 ? 'error' : null}
-                            placeholder='location'
-                            type='location'
-                            name='location'
-                            noValidate
-                            onChange={this.handleChange} />
-                        {formErrors.location.length > 0 && (
-                            <span className='errorMessage'>{formErrors.location}</span>
-                        )}
-                    </div>
+                    {/*<div className='lastName'>*/}
+                    {/*    <label htmlFor='lastName'>Last Name</label>*/}
+                    {/*    <input*/}
+                    {/*        className={formErrors.lastName.length > 0 ? 'error' : null}*/}
+                    {/*        placeholder='Last Name'*/}
+                    {/*        type='lastName'*/}
+                    {/*        name='lastName'*/}
+                    {/*        noValidate*/}
+                    {/*        onChange={this.handleChange} />*/}
+                    {/*    {formErrors.lastName.length > 0 && (*/}
+                    {/*        <span className='errorMessage'>{formErrors.lastName}</span>*/}
+                    {/*    )}*/}
+                    {/*</div>*/}
                     <div className='email'>
                         <label htmlFor='email'>Email</label>
                         <input
@@ -146,19 +141,6 @@ export default class UserRegistration extends Component {
                             onChange={this.handleChange} />
                         {formErrors.email.length > 0 && (
                             <span className='errorMessage'>{formErrors.email}</span>
-                        )}
-                    </div>
-                    <div className='phoneNumber'>
-                        <label htmlFor='phoneNumber'>Phone Number</label>
-                        <input
-                            className={formErrors.phoneNumber.length > 0 ? 'error' : null}
-                            placeholder='Phone Number'
-                            type='phoneNumber'
-                            name='phoneNumber'
-                            noValidate
-                            onChange={this.handleChange} />
-                        {formErrors.phoneNumber.length > 0 && (
-                            <span className='errorMessage'>{formErrors.phoneNumber}</span>
                         )}
                     </div>
                     <div className='password'>
@@ -177,6 +159,7 @@ export default class UserRegistration extends Component {
                     <div className='createAccount'>
                         <button type='submit'>Create Account</button>
                         <small>Already Have an Account?</small>
+                        <Link to='/login'>Click here</Link>
                     </div>
                 </form>
             </div>

@@ -23,6 +23,7 @@ export default class Search extends Component {
             if (this.state.query && this.state.query.length > 1) {
                 if (this.state.query.length % 2 === 0) {
                     this.searchDriver(this.state.query);
+                    console.log(this.state.drivers)
                 }
             } else {
                 this.searchDriver(this.state.query);
@@ -40,9 +41,10 @@ export default class Search extends Component {
                     return r.data;
                 })
                 .then(data => {
+                    console.log(data)
                     let drivers = data.filter(drivers => drivers.location === query).map((drivers) => {
                         return (
-                            <DriverCard  key={drivers.id} driver={drivers}/>
+                            <DriverCard  key={drivers.name} driver={drivers}/>
                         )
                     })
                     this.setState({ drivers: drivers });

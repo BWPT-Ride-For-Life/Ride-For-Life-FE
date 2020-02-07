@@ -1,4 +1,4 @@
-import React, { Component, useState} from "react";
+import React, { Component } from "react";
 import { Redirect, Link }  from 'react-router-dom'
 import '../App.css';
 import {axiosWithAuth} from "../utils/AxiosWithAuth";
@@ -18,8 +18,6 @@ const formValid = ({formErrors, ...rest}) => {
     return valid;
 };
 //This validates filled forms
-
-// const [redirect, setRedirect] = useState(false)
 
 export default class DriverRegistration extends Component {
     constructor(props) {
@@ -48,7 +46,6 @@ export default class DriverRegistration extends Component {
     }
     handleSubmit = e => {
         e.preventDefault();
-
         if (formValid(this.state)) {
             console.log(`
         --SUBMITTING--
@@ -60,15 +57,15 @@ export default class DriverRegistration extends Component {
         Phone Number: ${this.state.phoneNumber}
         Password: ${this.state.password}
         `)
-            let info = {
-                firstName: this.state.firstName,
-                lastName: this.state.lastName,
-                location_id: this.state.location_id,
-                price: this.state.price,
-                email: this.state.email,
-                phoneNumber: this.state.phoneNumber,
-                password: this.state.password
-            }
+        let info = {
+            firstName: this.state.firstName,
+            lastName: this.state.lastName,
+            location_id: this.state.location_id,
+            price: this.state.price,
+            email: this.state.email,
+            phoneNumber: this.state.phoneNumber,
+            password: this.state.password
+        }
         axiosWithAuth()
             .post('api/auth/register-driver', info)
             .then(res => {
@@ -78,10 +75,6 @@ export default class DriverRegistration extends Component {
                 this.setState({
                     redirect: true
                 })
-                // eslint-disable-next-line no-undef
-                // if (redirect === true) {
-                //
-                // }
             })
             .catch(error => console.log(error, "Login Error"))
         } else {
@@ -229,12 +222,11 @@ export default class DriverRegistration extends Component {
                             )}
                     </div>
                     <div className='createAccount'>
-                        <button type='submit' /*onClick={this.setRedirect}*/>Create Account</button>
+                        <button type='submit'>Create Account</button>
                         <small>Already Have an Account?</small>
                         <Link to='/login'>Click here</Link>
                     </div>
                 </form>
-
             </div>
         </div>;
     }

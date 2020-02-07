@@ -8,7 +8,6 @@ const emptyForm = {
 
 const Login = (props) => {
     const [info, setInfo] = useState(emptyForm)
-    const [userType, setUserType] = useState('')
     const handleChange = e => {
         setInfo({
             ...info,
@@ -23,10 +22,15 @@ const Login = (props) => {
             .then(res => {
                 console.log(res.data)
                 localStorage.setItem('token', res.data.token);
-                localStorage.setItem('id', res.data.id);
+                let prop = 'driverId'
+                if (res.data.hasOwnProperty(prop)) {
+                    localStorage.setItem('id', res.data.driverId);
+                } else {
+                    localStorage.setItem('id', res.data.userId)
+                }
+                console.log(res.data.driverId)
                 setInfo(emptyForm)
-                setUserType(res.data)
-                if (('driver_id' in userType)) {
+                if (res.data.hasOwnProperty(prop)) {
                     props.history.push('/DriverAccount')
                 } else {
                     props.history.push('/UserAccount')
