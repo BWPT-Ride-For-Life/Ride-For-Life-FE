@@ -9,6 +9,7 @@ import UserAccount from "./components/UserAccount";
 import ProtectedRoute from "./utils/ProtectedRoute";
 import DriverRegistration from "./components/DriverRegistration";
 import UserRegistration from "./components/UserRegistration";
+import Nav from './components/Nav'
 
 function App() {
 
@@ -28,13 +29,10 @@ function App() {
             })
     },[])
   return (
-
       <div>
-          <header className="App-header">
-              <h1>Ride for Life</h1>
-              {/*<DriverRegistration />*/}
-          </header>
+              <h4>Ride for Life</h4>
         <Router className="App">
+            <Route exact path='/' component={Nav}/>
             <Route exact path='/RegisterDriver' component={DriverRegistration}/>
             <Route exact path='/RegisterUser' component={UserRegistration}/>
             <Route exact path='/Login' component={Login} />
@@ -44,6 +42,6 @@ function App() {
             {/*</DriverContext.Provider>*/}
         </Router>
       </div>
-)
-  }
+  )
+}
   export default App

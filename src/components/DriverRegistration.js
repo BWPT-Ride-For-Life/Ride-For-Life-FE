@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import { Redirect, Link }  from 'react-router-dom'
 import '../App.css';
 import {axiosWithAuth} from "../utils/AxiosWithAuth";
+import { DropDownList } from '@progress/kendo-react-dropdowns'
+// import EventsLogger from './EventsLogger'
 
 function emailIsValid (email) {
     return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)
@@ -9,20 +11,26 @@ function emailIsValid (email) {
 const formValid = ({formErrors, ...rest}) => {
     let valid = true;
 //This validates empty form errors
-    Object.values(formErrors, rest).forEach(val => {
-        (val.length > 0 || val.length === null ) && (valid = false)
-        // Object.values(rest).forEach(val =>{
-        //     val === null && (valid = false)
-        // });
+    Object.values(formErrors).forEach(val => {
+        val.length > 0 && (valid = false)
+        Object.values(rest).forEach(val =>{
+            val === null && (valid = false)
+        });
     });
     return valid;
 };
+
+//     Object.values(formErrors, rest).forEach(val => {
+//         (val.length > 0 || val.length === null ) && (valid = false)
+//         return valid
+// };
+
 //This validates filled forms
 
 export default class DriverRegistration extends Component {
+    // source = ['Kira', 'Kampala', 'Nansana']
     constructor(props) {
         super(props);
-
         this.state = {
             firstName: null,
             lastName: null,
@@ -32,6 +40,7 @@ export default class DriverRegistration extends Component {
             phoneNumber: null,
             password: null,
             redirect: false,
+            // events: [],
             formErrors: {
                 firstName: "",
                 lastName: "",
@@ -120,6 +129,22 @@ export default class DriverRegistration extends Component {
         this.setState({formErrors, [name]: value}, () => console.log(this.state))
 
     };
+    // //dropdown menu stuff
+    // onOpen = () => { this.log('open'); }
+    // onClose = () => { this.log('close'); }
+    // onFocus = () => { this.log('focus'); }
+    // onBlur = () => { this.log('blur'); }
+    // onChange = (event) => { this.log('change', event.target.id); }
+    // onFilterChange = (event) => { this.log('filterChange', event.filter.id + 1); }
+    // //more dropdown stuff
+    // log(event, arg) {
+    //     const events = this.state.events;
+    //     events.unshift(`${event} ${arg || ""}`);
+    //
+    //     this.setState({
+    //         events: events
+    //     });
+    // }
 
     render() {
 
@@ -128,7 +153,7 @@ export default class DriverRegistration extends Component {
         return <div className='wrapper'>
             {this.renderRedirect()}
             <div className='form-wrapper'>
-                <h1>Rider Account</h1>
+                <h1>Create Driver Account</h1>
                 <form onSubmit={this.handleSubmit} noValidate>
                     <div className='firstName'>
                         <label htmlFor='firstName'>First Name</label>
@@ -156,11 +181,24 @@ export default class DriverRegistration extends Component {
                                 <span className='errorMessage'>{formErrors.lastName}</span>
                             )}
                     </div>
+                    {/*<DropDownList*/}
+                    {/*    data={this.source}*/}
+                    {/*    onOpen={this.onOpen}*/}
+                    {/*    onClose={this.onClose}*/}
+                    {/*    onFocus={this.onFocus}*/}
+                    {/*    onBlur={this.onBlur}*/}
+                    {/*    onChange={this.onChange}*/}
+                    {/*    onFilterChange={this.onFilterChange}*/}
+                    {/*    filterable={true}*/}
+                    {/*>Location</DropDownList>*/}
+                    {/*<br />*/}
+                    {/*<br />*/}
+                    {/*<EventsLogger events={this.state.events} />*/}
                     <div className='location'>
                         <label htmlFor='location_id'>Location</label>
                         <input
                             className={formErrors.location_id.length > 0 ? 'error' : null}
-                            placeholder='location_id'
+                            placeholder='1: Kampala, 2: Kira, 3: Nansana'
                             type='number'
                             name='location_id'
                             noValidate
@@ -231,3 +269,18 @@ export default class DriverRegistration extends Component {
         </div>;
     }
 }
+
+// class EventsLogger extends Component {
+//     render() {
+//         return (
+//             <div className="example-config">
+//                 <h5>Event log</h5>
+//                 <ul className="event-log" style={{ textAlign: 'right' }}>
+//                     {this.props.events.map(function(event, index) {
+//                         return (<li key={index}>{event}</li>);
+//                     })}
+//                 </ul>
+//             </div>
+//         );
+//     }
+// }

@@ -102,7 +102,7 @@ export default class UserRegistration extends Component {
         return <div className='wrapper'>
             <div className='form-wrapper'>
                 {this.renderRedirect()}
-                <h1>Rider Account</h1>
+                <h1>Create User Account</h1>
                 <form onSubmit={this.handleSubmit} noValidate>
                     <div className='firstName'>
                         <label htmlFor='name'>Name</label>
