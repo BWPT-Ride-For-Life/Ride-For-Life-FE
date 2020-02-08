@@ -10,7 +10,9 @@ export default class Search extends Component {
         this.state = {
             query: null,
             drivers: [],
+            showMenu: false
         }
+        this.showMenu = this.showMenu.bind(this)
     }
 
 
@@ -22,8 +24,9 @@ export default class Search extends Component {
         e.preventDefault()
         this.setState({ query: e.target.value }, () => {
             if (this.state.query && this.state.query.length > 1) {
-                if (this.state.query.length % 2 === 0) {
+                if (this.state.query.length % 1 === 0) {
                     this.searchDriver(this.state.query);
+                    console.log(this.state.query)
                     console.log(this.state.drivers)
                 }
             } else {
@@ -71,16 +74,35 @@ export default class Search extends Component {
         //         .catch(err => console.log(err, 'error'))
         // }
     }
+    showMenu(e) {
+        e.preventDefault();
+        this.setState({
+            showMenu: true,
+        });
+    }
 
     render() {
         return (
             <form>
-                <input
-                    type="text"
-                    className="search-box"
-                    placeholder="Search driver location..."
-                    onChange={this.onChange.bind(this)}
-                />
+                {/*<input*/}
+                {/*    type="text"*/}
+                {/*    className="search-box"*/}
+                {/*    placeholder="Search driver location..."*/}
+                {/*    onChange={this.onChange.bind(this)}*/}
+                {/*/>*/}
+                <div>
+                    <button onClick={this.showMenu}>
+                        Search for drivers
+                    </button>
+                    {this.state.showMenu
+                        ? (<div className="menu">
+                                <button onClick={this.onChange.bind(this)} value='Kira'> Kira </button>
+                                <button onClick={this.onChange.bind(this)} value='Kampala'> Kampala </button>
+                                <button onClick={this.onChange.bind(this)} value='Nansana'> Nansana </button>
+                            </div>
+                        ) : null
+                    }
+                </div>
                 {this.state.drivers}
             </form>
         )
