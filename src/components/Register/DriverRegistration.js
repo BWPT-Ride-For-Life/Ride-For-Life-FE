@@ -1,14 +1,15 @@
 import React, { Component } from "react";
 //import './App.css';
-export default class UserRegistrationForm extends React.Component{
+export  class DriverRegistration extends React.Component{
     constructor (props){
       super(props)
       this.state ={
-        firstName: "",
-        lastName: "",
-        location: "",
-        price: "''",
-        email: "''",
+        isDriverRegistrationActive: true,
+        firstName: '',
+        lastName: '',
+        location: '',
+        price: '',
+        email: '',
         phoneNumber: '',
         password: '',
             firstNameError: "",
@@ -19,13 +20,46 @@ export default class UserRegistrationForm extends React.Component{
             phoneNumberError: "",
             passwordError: ""  
       };
+      this.handleSubmit=this.handleSubmit.bind(this)
     }
     
   
-    handleChange = (event) =>{
+    handleFirstNameChange = (event) =>{
       this.setState({
-          [event.target.name]: event.target.value});
-      }
+          firstName:event.target.value
+        })
+    }
+    handleLastNameChange = (event) =>{
+      this.setState({
+          lastName:event.target.value
+        })
+    }
+    handleLocationChange = (event) =>{
+      this.setState({
+          location:event.target.value
+        })
+    }
+    handlePriceChange = (event) =>{
+      this.setState({
+          price:event.target.value
+        })
+    }
+    handleEmailChange = (event) =>{
+      this.setState({
+          email:event.target.value
+        })
+    }
+    handlePhoneNumberChange = (event) =>{
+      this.setState({
+          phoneNumber:event.target.value
+        })
+    }
+    handlePasswordChange = (event) =>{
+      this.setState({
+          password:event.target.value
+        })
+    }
+
   
     validate =()=>{
    let firstNameError = "";
@@ -55,38 +89,48 @@ export default class UserRegistrationForm extends React.Component{
         const isValid = this.validate();
         if (isValid){
           console.log(this.state);
+          this.setState({
+            firstName: '',
+            lastName: '',
+            location: '',
+            price: '',
+            email: '',
+            phoneNumber: '',
+            password: '' 
+          })
        //clear form 
   
       }
     }
   
   
-        submit(){
-          let obj={}
-        obj.firstame= this.state.firstName;
-        obj.lastame= this.state.lastName;
-        obj.location= this.state.location;
-        obj.price=this.state.price;
-        obj.email=this.state.email;
-        obj.firstame=this.state.phoneNumber;
-        obj.firstame=this.state.password;
+    //     submit(){
+    //       let obj={}
+    //     obj.firstame= this.state.firstName;
+    //     obj.lastame= this.state.lastName;
+    //     obj.location= this.state.location;
+    //     obj.price=this.state.price;
+    //     obj.email=this.state.email;
+    //     obj.firstame=this.state.phoneNumber;
+    //     obj.firstame=this.state.password;
         
-    }
+    // }
     
       
-    render() {
-        
-        return <div className='wrapper'>
+    render(){
+ 
+        return <div className='wrapper' ref={this.props.wrapperRef}>
             <div className='form-wrapper'>
-                <h1>Rider Account</h1>
+                <h1>Driver Account</h1>
                 <form onSubmit={this.handleSubmit}>
                     <div className='firstName'>
                         <label htmlFor='firstName'>First Name</label>
-                        <input                            name='firstName'
+                        <input
+                            name='firstName'
                             placeholder='First Name'
                             type='firstName'
-                            firstname='firstName'
-                           onChange= {this.handleChange} />
+                            value={this.state.firstName}
+                           onChange= {this.handleFirstNameChange} />
                         <div style={{fontSize: 10, color: 'red'}}>{this.state.firstNameError}</div>    
                     </div>
                     <div className='lastName'>
@@ -95,8 +139,8 @@ export default class UserRegistrationForm extends React.Component{
                             name='lastName'
                             placeholder='Last Name'
                             type='lastName'
-                            lastname='lastName'
-                            onChange={this.handleChange} />         
+                            value={this.state.lastName}
+                            onChange={this.handleLastNameChange} />         
                     </div>
                     <div className='location_id'>
                         <label htmlFor='location_id'>Location</label>
@@ -109,6 +153,16 @@ export default class UserRegistrationForm extends React.Component{
     {this.handleChange} 
                             
                     </div>
+                    <div className='price'>
+                        <label htmlFor='price'>Price</label>
+                        <input
+                            name='price'
+                            placeholder='$Price'
+                            type='price'
+                            value={this.state.price}
+                            onChange={this.handlePriceChange} />
+                                
+                    </div>
                     <div className='email'>
                         <label htmlFor='email'>Email</label>
                         <input
@@ -116,7 +170,8 @@ export default class UserRegistrationForm extends React.Component{
                             placeholder='Email'
                             type='email'
                             email='email'
-                            onChange={this.handleChange} />
+                            value={this.state.email}
+                            onChange={this.handleEmailChange} />
                                 
                     </div>
                     <div className='phoneNumber'>
@@ -126,8 +181,8 @@ export default class UserRegistrationForm extends React.Component{
                             placeholder='Phone Number'
                             type='phoneNumber'
                             phoneNumber='phoneNumber'
-                            noValidate
-                            onChange={this.handleChange} />
+                            value={this.state.phoneNumber}
+                            onChange={this.handlePhoneNumberChange} />
                                
                     </div>
                     <div className='password'>
@@ -136,14 +191,14 @@ export default class UserRegistrationForm extends React.Component{
                             className='password'
                             placeholder='Password'
                             type='password'
-                            name='password'
-                            onChange={this.handleChange} />
+                            value={this.state.password}
+                            onChange={this.handlePasswordChange} />
                                  
                             
                             
                     </div>
                     <div className='createAccount'>
-                        <button onClick={() => this.submit()}type='submit'>Submit</button>
+                        <button type='submit'>Submit</button>
                         <small>Already Have an Account?</small>
                     </div>
                 </form>
@@ -151,3 +206,4 @@ export default class UserRegistrationForm extends React.Component{
         </div>;
     }
 }
+export default DriverRegistration

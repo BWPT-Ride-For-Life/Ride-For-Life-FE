@@ -1,6 +1,8 @@
 import React, { Component } from "react";
 //import './App.css';
-export default class DriverRegistrationForm extends React.Component{
+
+
+export default class UserRegistrationForm extends React.Component{
     constructor (props){
       super(props)
       this.state ={
@@ -35,12 +37,14 @@ export default class DriverRegistrationForm extends React.Component{
     let emailError = "";
     // let phoneNumberError = "";
     // let passwordError = "";
+
     if (!this.state.firstName){
       firstNameError = '';
     }
     if (!this.state.lastName){
       lastNameError = '';
     }
+
     if (!this.state.email.includes('@')){
       emailError = 'invalid email';
     }
@@ -50,6 +54,8 @@ export default class DriverRegistrationForm extends React.Component{
     }
     return true;
   };
+
+
     handleSubmit = event => {
         event.preventDefault();
         const isValid = this.validate();
@@ -63,6 +69,7 @@ export default class DriverRegistrationForm extends React.Component{
   
         submit(){
           let obj={}
+
         obj.firstame= this.state.firstName;
         obj.lastame= this.state.lastName;
         obj.location= this.state.location;
@@ -72,18 +79,18 @@ export default class DriverRegistrationForm extends React.Component{
         obj.firstame=this.state.password;
         
     }
+
     
       
     render() {
         
         return <div className='wrapper'>
             <div className='form-wrapper'>
-                <h1>Driver Account</h1>
+                <h1>Rider Account</h1>
                 <form onSubmit={this.handleSubmit}>
                     <div className='firstName'>
                         <label htmlFor='firstName'>First Name</label>
-                        <input
-                            name='firstName'
+                        <input                            name='firstName'
                             placeholder='First Name'
                             type='firstName'
                             firstname='firstName'
@@ -109,16 +116,6 @@ export default class DriverRegistrationForm extends React.Component{
 </select>  
     {this.handleChange} 
                             
-                    </div>
-                    <div className='price'>
-                        <label htmlFor='price'>Price</label>
-                        <input
-                            name='price'
-                            placeholder='$Price'
-                            type='price'
-                            email='price'
-                            onChange={this.handleChange} />
-                                
                     </div>
                     <div className='email'>
                         <label htmlFor='email'>Email</label>
@@ -158,7 +155,15 @@ export default class DriverRegistrationForm extends React.Component{
                         <small>Already Have an Account?</small>
                     </div>
                 </form>
+
             </div>
         </div>;
     }
 }
+
+
+        
+
+    
+
+    
