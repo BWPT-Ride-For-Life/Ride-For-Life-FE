@@ -2,49 +2,26 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
-  background-color: #282c34;
+  background-color: palegoldenrod;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  color: blue;
 }
 
-.App-link {
-  color: #61dafb;
-}
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
-}
 
 .wrapper{
   height: 100vh;
   width: 100%;
   display: flex;
-  flex-direction: column;
+  flex-direction: row;
   justify-content: center;
   align-items: center;
-  background-color: bisque;
+  background-color: beige;
 }
 .form-wrapper{
   width: 400px;
@@ -53,6 +30,7 @@
   padding: 20px 40px;
   border-radius: 10px;
   box-shadow: 0 10px 50px lightgray;
+  background-color: palegoldenrod;
 }
 form{
   width: 100%;
@@ -62,7 +40,7 @@ form{
 h1{
   text-align: center;
   width:100%;
-  color: #111;
+  color: goldenrod;
   font-weight: lighter;
 }
 label{
@@ -76,7 +54,15 @@ input{
   border-radius: 8px;
   outline: none;
   border: 1px solid goldenrod;
+  margin-top: 8px;
+  transition: all 250ms ease-in-out;
 }
+input:focus {
+    outline: none;
+    box-shadow: 0 0 12px .8px goldenrod;
+  }
+
+
 input::placeholder{
   font-size: 1.2em;
   font-weight: lighter;
@@ -123,4 +109,24 @@ input.error{
   display: flex;
   flex-direction: column;
   align-items: center;
+}
+.email{
+  margin-top: 10px;
+}
+.price{
+  margin-top: 10px; 
+}
+button{
+  width: 100%;
+  height: 30px;
+  background-color: lightgray;
+}
+button:hover{
+background-color: maroon;
+color: beige;
+  }
+
+button:focus {
+  outline: none;
+  box-shadow: 0 0 12px .8px goldenrod;
 }

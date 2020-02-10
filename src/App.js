@@ -7,8 +7,8 @@ import Login from './components/Login'
 import DriverAccount from "./components/DriverAccount";
 import UserAccount from "./components/UserAccount";
 import ProtectedRoute from "./utils/ProtectedRoute";
-import DriverRegistration from "./components/DriverRegistration";
-import UserRegistration from "./components/UserRegistration";
+import DriverRegistration from './components/Register/DriverRegistration'
+import UserRegistration from './components/Register/UserRegistration'
 
 function App() {
     const [rideForLife, setRideForLife] = useState([])
@@ -29,6 +29,7 @@ function App() {
           <header className="App-header">
               <h1>Ride for Life</h1>
               <DriverRegistration />
+              <UserRegistration />
           </header>
         <Router className="App">
             <Route exact path='/RegisterDriver' component={DriverRegistration}/>
