@@ -18,6 +18,7 @@ const DriverProfileCard = () => {
             })
             .catch(err => console.log(err))
     }, [])
+    
     console.log(reviews, 'this is reviews state')
     return (
         <div>
